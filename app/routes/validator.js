@@ -1,9 +1,9 @@
 module.exports = function(app) {
-    app.get("/emailValidator",function(req, res) {
+    app.get("/",function(req, res) {
         res.render('index');
     });
 	
-	app.post('/emailValidator/validate',function(req,res){
+	app.post('/validate',function(req,res){
 		res.setHeader('Content-Type', 'application/json');
 		
 		var email = req.body.email;
