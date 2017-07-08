@@ -1,0 +1,72 @@
+<html>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<style>
+			html, body, div {
+			    height: 100%;
+			}
+
+			html, div, h2 {
+			    display: table;
+			    margin: auto;
+			}
+
+			body {
+			    display: table-cell;
+			    vertical-align: middle;
+			}
+			input {
+				margin-left: 5px;
+			}
+		</style>
+		<script>
+			(function () {
+			  function init(){
+				$('#submitButton').click(submitButtonHandler);
+			  }
+
+			  function submitButtonHandler (evt) {
+				 var emailForm = document.getElementById('emailForm');
+
+				  evt.preventDefault();
+				  evt.stopPropagation();
+
+				  $.ajax({
+					url: 'emailValidator/validate',
+					type: 'POST',
+					data: {
+					  email: emailForm.email.value
+					},
+					success: function(data) {
+						console.log(data.isValid);
+						console.log(JSON.stringify(data));
+						if(data.isValid){
+							$('#validationResult').text("Valid email!");
+							$('#validationResult').css("color", "green");
+						}else{
+							$('#validationResult').text("Invalid email!");
+							$('#validationResult').css("color", "red");
+						}
+					}
+				  });
+			  }
+			  
+			$(document).ready(init);
+			})();
+		</script>
+	</head>
+    <body css="">
+        <form id="emailForm" method="POST">
+    		<div>
+    			<h1>TASIMA Email Validator</h1>
+    		</div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="text" id="email" name="email"/>
+				<input type="submit" id="submitButton" value="Validate"/>
+				<br/>&nbsp; &nbsp;
+				<h2 id="validationResult"></h2>
+            </div>
+        </form>
+    </body>
+</html>
